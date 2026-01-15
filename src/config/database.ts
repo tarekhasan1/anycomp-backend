@@ -1,4 +1,3 @@
-// src/config/database.ts
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
 import { Specialist } from '../entities/Specialist.entity';
@@ -15,7 +14,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_NAME || 'anycomp_db',
-  synchronize: process.env.NODE_ENV === 'development', // Only in dev
+  synchronize: process.env.NODE_ENV !== 'production', // IMPORTANT: false in production
   logging: process.env.NODE_ENV === 'development',
   entities: [Specialist, ServiceOffering, PlatformFee, Media],
   migrations: ['src/migrations/**/*.ts'],

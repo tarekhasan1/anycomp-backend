@@ -1,4 +1,3 @@
-// src/server.ts
 import 'reflect-metadata';
 import { createApp } from './app';
 import { AppDataSource } from './config/database';
@@ -13,9 +12,10 @@ const startServer = async () => {
     // Create Express app
     const app = createApp();
 
-    // Start server
-    const PORT = parseInt(env.PORT);
-    app.listen(PORT, () => {
+    // Use PORT from environment (Railway sets this)
+    const PORT = parseInt(process.env.PORT || '5000');
+    
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`🌍 Environment: ${env.NODE_ENV}`);
     });
@@ -24,17 +24,5 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (reason: Error) => {
-  console.error('Unhandled Rejection:', reason);
-  process.exit(1);
-});
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (error: Error) => {
-  console.error('Uncaught Exception:', error);
-  process.exit(1);
-});
 
 startServer();
