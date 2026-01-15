@@ -8,12 +8,13 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.string().default('5000'),
   
-  DB_HOST: z.string(),
-  DB_PORT: z.string().default('5432'),
-  DB_USERNAME: z.string(),
-  DB_PASSWORD: z.string(),
-  DB_NAME: z.string(),
-  DB_SSL: z.string().optional(),
+  // Support Railway's DATABASE_URL (primary) or standard PostgreSQL variables
+  DATABASE_URL: z.string().optional(),
+  PGHOST: z.string().optional(),
+  PGPORT: z.string().default('5432'),
+  PGUSER: z.string().optional(),
+  PGPASSWORD: z.string().optional(),
+  PGDATABASE: z.string().optional(),
   
   JWT_SECRET: z.string().optional(),
   JWT_EXPIRES_IN: z.string().default('7d'),
